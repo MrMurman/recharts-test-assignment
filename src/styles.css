@@ -2,3 +2,15 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.legend-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
