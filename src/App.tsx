@@ -1,4 +1,3 @@
-import "./styles.css";
 import React from "react";
 import {
   LineChart,
@@ -9,70 +8,77 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  LabelList,
+  DotProps,
 } from "recharts";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+import { calculateZScore } from "./helpers";
+
+import {
+  BASE_COLORS,
+  CHART_CONTAINER_DIMENSIONS,
+  DATA,
+  LINES,
+} from "./constants";
+
+import { CustomLegend } from "./components/CustomLegend";
+import { CustomGradient } from "./components/CustomGradient";
+import { CustomDot } from "./components/CustomDot";
+import { TLine } from "./types";
+
+import "./styles.css";
 
 export default function App() {
+  const uvZScores = calculateZScore(DATA.flatMap((item) => item.uv));
+  const pvZScores = calculateZScore(DATA.flatMap((item) => item.pv));
+
+  const { width, height, topMargin, padding } = CHART_CONTAINER_DIMENSIONS;
+
+  const scores = (lineType: TLine) =>
+    lineType === "uv" ? uvZScores : pvZScores;
+
   return (
-    <ResponsiveContainer width={"100%"} height={300}>
-      <LineChart data={data} margin={{ top: 20 }} accessibilityLayer>
+    <ResponsiveContainer width={width} height={height}>
+      <LineChart data={DATA} margin={{ top: topMargin }} accessibilityLayer>
+        {LINES.map((lineType) => (
+          <defs>
+            <CustomGradient
+              key={lineType}
+              id={`${lineType}Gradient`}
+              data={scores(lineType)}
+              baseColor={BASE_COLORS[lineType]}
+            />
+          </defs>
+        ))}
+
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
+        <XAxis dataKey="name" padding={{ left: padding, right: padding }} />
         <YAxis />
         <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        ></Line>
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d"></Line>
+        <Legend content={<CustomLegend />} />
+        {LINES.map((lineType) => (
+          <Line
+            key={lineType}
+            type="monotone"
+            dataKey={lineType}
+            stroke={`url(#${lineType}Gradient)`}
+            dot={(props: DotProps) => (
+              <CustomDot
+                {...props}
+                scores={scores(lineType)}
+                lineType={lineType}
+                dotType="standard"
+              />
+            )}
+            activeDot={(props: DotProps) => (
+              <CustomDot
+                {...props}
+                scores={scores(lineType)}
+                lineType={lineType}
+                dotType="active"
+              />
+            )}
+          />
+        ))}
       </LineChart>
     </ResponsiveContainer>
   );
