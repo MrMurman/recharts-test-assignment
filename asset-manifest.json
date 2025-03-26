@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/MrMurman/recharts-test-assignment/static/css/main.4cc6b3a6.chunk.css",
+    "main.js": "/MrMurman/recharts-test-assignment/static/js/main.9e4c958a.chunk.js",
+    "main.js.map": "/MrMurman/recharts-test-assignment/static/js/main.9e4c958a.chunk.js.map",
+    "runtime-main.js": "/MrMurman/recharts-test-assignment/static/js/runtime-main.d24e50e5.js",
+    "runtime-main.js.map": "/MrMurman/recharts-test-assignment/static/js/runtime-main.d24e50e5.js.map",
+    "static/js/2.e5979b57.chunk.js": "/MrMurman/recharts-test-assignment/static/js/2.e5979b57.chunk.js",
+    "static/js/2.e5979b57.chunk.js.map": "/MrMurman/recharts-test-assignment/static/js/2.e5979b57.chunk.js.map",
+    "index.html": "/MrMurman/recharts-test-assignment/index.html",
+    "static/css/main.4cc6b3a6.chunk.css.map": "/MrMurman/recharts-test-assignment/static/css/main.4cc6b3a6.chunk.css.map",
+    "static/js/2.e5979b57.chunk.js.LICENSE.txt": "/MrMurman/recharts-test-assignment/static/js/2.e5979b57.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d24e50e5.js",
+    "static/js/2.e5979b57.chunk.js",
+    "static/css/main.4cc6b3a6.chunk.css",
+    "static/js/main.9e4c958a.chunk.js"
+  ]
+}
